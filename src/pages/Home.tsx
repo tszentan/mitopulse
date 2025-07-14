@@ -1,5 +1,5 @@
 import React from "react";
-import homeVideo from "../assets/home.mp4";
+import video from "../assets/mitopulse.mp4";
 
 const Home: React.FC = () => {
   return (
@@ -7,7 +7,7 @@ const Home: React.FC = () => {
       {/* Video Section */}
       <section className="relative w-full h-[50vh] md:h-[75vh]">
         <video
-          src={homeVideo}
+          src={video}
           autoPlay
           loop
           muted
