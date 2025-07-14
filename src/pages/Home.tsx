@@ -11,6 +11,7 @@ const Home: React.FC = () => {
           autoPlay
           loop
           muted
+          playsInline
           className="object-fill w-full h-full"
         />
         
