@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import logo from "../assets/logo.png";
 
@@ -60,6 +60,13 @@ const Navbar: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const location = useLocation();
+
+  // Close dropdown and mobile menu on route change
+  React.useEffect(() => {
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+  }, [location]);
 
   // Handle outside click to close dropdowns
   React.useEffect(() => {
@@ -68,17 +75,9 @@ const Navbar: React.FC = () => {
       const nav = document.getElementById("navbar");
       if (nav && !nav.contains(e.target as Node)) setOpenDropdown(null);
     };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
   }, [openDropdown]);
-
-  // Close mobile menu on route change
-  React.useEffect(() => {
-    if (!mobileMenuOpen) return;
-    const close = () => setMobileMenuOpen(false);
-    window.addEventListener("resize", close);
-    return () => window.removeEventListener("resize", close);
-  }, [mobileMenuOpen]);
 
   // Prevent body scroll when mobile menu is open
   React.useEffect(() => {
@@ -149,37 +148,37 @@ const Navbar: React.FC = () => {
 
           <AnimatedMenuIcon open={mobileMenuOpen} toggle={() => setMobileMenuOpen((v) => !v)} />
         </div>
-      </nav>
 
-      {/* Render individual dropdown */}
-      <AnimatePresence>
-        {navLinks.map(
-          (nav) =>
-            nav.dropdown &&
-            openDropdown === nav.label && (
-              <motion.div
-                key={nav.label}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-                className="fixed top-16 left-0 right-0 w-full z-20 bg-white shadow-lg overflow-hidden"
-              >
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-end gap-10 py-5">
-                  {nav.dropdown.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.href}
-                      className="font-exo2 text-lg text-primary hover:text-secondary transition"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
-            )
-        )}
-      </AnimatePresence>
+        {/* Render individual dropdown */}
+        <AnimatePresence>
+          {navLinks.map(
+            (nav) =>
+              nav.dropdown &&
+              openDropdown === nav.label && (
+                <motion.div
+                  key={nav.label}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+                  className="fixed top-16 left-0 right-0 w-full z-20 bg-white shadow-lg overflow-hidden"
+                >
+                  <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-end gap-10 py-5">
+                    {nav.dropdown.map((item) => (
+                      <Link
+                        key={item.label}
+                        to={item.href}
+                        className="font-exo2 text-lg text-primary hover:text-secondary transition"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )
+          )}
+        </AnimatePresence>
+      </nav>
       
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -236,7 +235,6 @@ const Navbar: React.FC = () => {
                                 key={item.label}
                                 to={item.href}
                                 className="py-2 text-secondary hover:text-accent transition text-base"
-                                onClick={() => setMobileMenuOpen(false)}
                               >
                                 {item.label}
                               </Link>
@@ -249,7 +247,6 @@ const Navbar: React.FC = () => {
                     <Link
                       to={nav.href!}
                       className="block hover:text-accent transition text-lg"
-                      onClick={() => setMobileMenuOpen(false)}
                     >
                       {nav.label}
                     </Link>
