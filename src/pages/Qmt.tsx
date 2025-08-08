@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function Qmt() {
   const [open, setOpen] = useState<number | null>(0);
