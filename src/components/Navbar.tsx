@@ -14,10 +14,11 @@ const navLinks: NavLink[] = [
     label: "SOLUTIONS",
     dropdown: [
       { label: "BIXEPS", href: "/solutions/bixeps" },
+      { label: "BIXEPS PRO", href: "/solutions/bixeps-pro" },
       { label: "QMT", href: "/solutions/qmt" },
     ],
   },
-  { label: "PRICING", href: "/pricing" },
+  { label: "LOCATIONS", href: "/locations" },
   { label: "ABOUT", href: "/about" },
   { label: "SUPPORT", href: "/support" },
 ];

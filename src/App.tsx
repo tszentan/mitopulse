@@ -3,8 +3,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Bixeps from "./pages/Bixeps";
+import BixepsPro from "./pages/BixepsPro";
 import Qmt from "./pages/Qmt";
-import Pricing from "./pages/Pricing";
+import Locations from "./pages/Locations";
 import About from "./pages/About";
 import Support from "./pages/Support";
 
@@ -16,8 +17,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/solutions/bixeps" element={<Bixeps />} />
+          <Route path="/solutions/bixeps-pro" element={<BixepsPro />} />
           <Route path="/solutions/qmt" element={<Qmt />} />
-          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/locations" element={<Locations />} />
           <Route path="/about" element={<About />} />
           <Route path="/support" element={<Support />} />
         </Routes>
